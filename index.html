@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Budzik</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+
+      h1 {
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+      }
+      .wrap {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      input {
+        padding: 10px 0;
+        text-align: center;
+        background-color: #1e9dff;
+        border: none;
+        border-radius: 24px;
+      }
+      button {
+        margin-left: 10px;
+        padding: 10px 30px;
+        color: #ee5253;
+        text-align: center;
+        background-color: #192a56;
+        border: none;
+        border-radius: 24px;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+      button:hover {
+        background-color: #ee5253;
+        color: #192a56;
+      }
+      .btn {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 20px 50px;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        opacity: 0;
+        transition: 2s;
+      }
+      .action {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 20px 50px;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        opacity: 1;
+      }
+      .btn:focus,
+      button:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <input type="text" id="hours" /> Podaj godzinę
+      <input type="text" id="minutes" /> Podaj minutę
+      <button id="submit">Potwierdź</button>
+    </div>
+    <button class="btn">Wyłącz Budzik !</button>
+
+    <h1>Budzik nastawiony na godzinę:<span></span></h1>
+
+    <script>
+      const span = document.querySelector("span");
+
+      let hours = document.getElementById("hours");
+      hours.addEventListener("input", e => {
+        e.preventDefault;
+        console.log(e.target.value);
+      });
+      let minutes = document.getElementById("minutes");
+      minutes.addEventListener("input", e => {
+        e.preventDefault;
+        console.log(e.target.value);
+      });
+      const submit = document.getElementById("submit");
+      submit.addEventListener("click", e => {
+        e.preventDefault;
+        span.textContent = hours.value + ":" + minutes.value;
+      });
+
+      setInterval(() => {
+        let day = new Date();
+        let hour = day.getHours();
+        let min = day.getMinutes();
+
+        if (hour == hours.value && min == minutes.value) {
+          let audio = new Audio("praca.mp3");
+          audio.play();
+          audio.loop = true;
+          console.log("ok");
+          const btn = document.querySelector(".btn");
+          btn.classList.add("action");
+          btn.addEventListener("click", e => {
+            e.preventDefault;
+            audio.pause();
+            audio.currentTime = 0;
+          });
+        }
+      }, 50000);
+
+      clearInterval();
+    </script>
+  </body>
+</html>
